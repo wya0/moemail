@@ -2,7 +2,7 @@
 
     on:
       schedule:
-        - cron: '0 */6 * * *' # 每6小时同步一次（UTC时间）
+        - cron: '0 16 * * 0' # 每周日UTC时间16点（即北京时间周一凌晨0点）同步一次
       workflow_dispatch: # 允许手动触发
 
     jobs:
