@@ -1,0 +1,22 @@
+    name: Sync Fork
+
+    on:
+      schedule:
+        - cron: '0 */6 * * *' # 每6小时同步一次（UTC时间）
+      workflow_dispatch: # 允许手动触发
+
+    jobs:
+      sync:
+        runs-on: ubuntu-latest
+        if: github.event.repository.fork # 只在fork仓库运行
+        steps:
+          - name: Checkout code
+            uses: actions/checkout@v3
+
+          - name: Sync with upstream
+            uses: aormsby/Fork-Sync-With-Upstream-action@v3.4.1
+            with:
+              target_repo_token: ${{ secrets.GITHUB_TOKEN }} # 使用Github自动生成的Token
+              upstream_sync_repo: beilunyang/moemail # 替换为上游仓库，如：torvalds/linux
+              upstream_sync_branch: master
+              target_sync_branch: master
